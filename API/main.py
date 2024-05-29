@@ -15,7 +15,7 @@ def mensaje():
 @app.get('/developer/{desarrollador}')
 def developer(desarrollador: str):
     # Ruta del archivo Parquet
-    file_path = r"C:\Users\mateo\OneDrive\Escritorio\data science\labs\PROYECTOSTEAAM\PARQUET\SteamGames.parquet"
+    file_path = "API/Datasets/SteamGames.parquet"
     
     # Cargar el archivo Parquet
     try:
@@ -56,9 +56,9 @@ def developer(desarrollador: str):
 @app.get("/user/{user_id}")
 def userdata(user_id: str):
     # Cargar los archivos Parquet
-    user_items_df = pd.read_parquet(r"C:\Users\mateo\OneDrive\Escritorio\data science\labs\PROYECTOSTEAAM\PARQUET\UsersItems.parquet")
-    user_reviews_df = pd.read_parquet(r"C:\Users\mateo\OneDrive\Escritorio\data science\labs\PROYECTOSTEAAM\PARQUET\UserReviews.parquet")
-    steam_games_df = pd.read_parquet(r"C:\Users\mateo\OneDrive\Escritorio\data science\labs\PROYECTOSTEAAM\PARQUET\SteamGames.parquet")
+    user_items_df = pd.read_parquet("API/Datasets/UsersItems.parquet")
+    user_reviews_df = pd.read_parquet("API/Datasets/UserReviews.parquet")
+    steam_games_df = pd.read_parquet("API/Datasets/SteamGames.parquet")
 
     # Verificar si el ID de usuario existe en ambos DataFrames
     if user_id not in user_items_df['user_id'].values:
@@ -114,8 +114,8 @@ def userdata(user_id: str):
 async def consultar_informacion(genero: str):
     try:
         # Cargar los archivos CSV en los pandas DataFrames
-        DFSteamGames = pd.read_csv(r"C:\Users\mateo\OneDrive\Escritorio\data science\labs\PROYECTOSTEAAM\CSV\SteamGames.csv")
-        DFUserItems = pd.read_csv(r"C:\Users\mateo\OneDrive\Escritorio\data science\labs\PROYECTOSTEAAM\CSV\UsersItems.csv")
+        DFSteamGames = pd.read_csv("API/Datasets/SteamGames.csv")
+        DFUserItems = pd.read_csv("API/Datasets/UsersItems.csv")
 
         # Verificar que las columnas 'item_id' existan en ambos DataFrames
         if 'item_id' not in DFSteamGames.columns or 'item_id' not in DFUserItems.columns:
@@ -166,8 +166,8 @@ async def consultar_informacion(genero: str):
 @app.get("/best_developer_year/{year}")
 def best_developer_year(year: int):
     # Cargar los DataFrames
-    steam_games_df = pd.read_parquet(r"C:\Users\mateo\OneDrive\Escritorio\data science\labs\PROYECTOSTEAAM\PARQUET\SteamGames.parquet")
-    user_reviews_df = pd.read_parquet(r"C:\Users\mateo\OneDrive\Escritorio\data science\labs\PROYECTOSTEAAM\PARQUET\UserReviews.parquet")
+    steam_games_df = pd.read_parquet("API/Datasets/SteamGames.parquet")
+    user_reviews_df = pd.read_parquet("API/Datasets/UserReviews.parquet")
 
     # Eliminar filas con valores faltantes en la columna 'release_date'
     steam_games_df = steam_games_df.dropna(subset=['release_date'])
@@ -208,8 +208,8 @@ def best_developer_year(year: int):
 @app.get("/developer_reviews_analysis/{desarrolladora}")
 def developer_reviews_analysis(desarrolladora: str):
     # Cargar los DataFrames
-    steam_games_df = pd.read_parquet(r"C:\Users\mateo\OneDrive\Escritorio\data science\labs\PROYECTOSTEAAM\PARQUET\SteamGames.parquet")
-    user_reviews_df = pd.read_parquet(r"C:\Users\mateo\OneDrive\Escritorio\data science\labs\PROYECTOSTEAAM\PARQUET\UserReviews.parquet")
+    steam_games_df = pd.read_parquet("API/Datasets/SteamGames.parquet")
+    user_reviews_df = pd.read_parquet("API/Datasets/UserReviews.parquet")
 
     # Filtrar las revisiones para la desarrolladora especificada
     reviews_desarrolladora = user_reviews_df[user_reviews_df['item_id'].isin(steam_games_df[steam_games_df['developer'] == desarrolladora]['item_id'])]
